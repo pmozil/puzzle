@@ -1,4 +1,5 @@
 """The puzzle module"""
+from board_generation import generate_board
 
 COLOURED_BLOCKS = [
     [(i, 4) for i in range(5)] + [(4, i) for i in range(5, 9)],
@@ -61,6 +62,8 @@ def validate_board(board: list[str]) -> bool:
     "3   7  **",\
     "  8  2***",\
      "  2  ****"])
+    True
+    >>> validate_board(generate_board(seed=884))
     True
     """
     return (

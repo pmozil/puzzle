@@ -1,6 +1,5 @@
 """The board generation module"""
 import time
-from puzzle import validate_board
 
 
 def linear_generator(
@@ -46,7 +45,7 @@ def generate_line(seed: int, length: int = 9) -> str:
     line = linear_generator(seed=seed, modulus=1024, length=length)
     result = ""
     for i in line:
-        if i > 900:
+        if i > 870:
             result += str(i % 10)
         elif i > 600:
             result += " "
@@ -55,19 +54,20 @@ def generate_line(seed: int, length: int = 9) -> str:
     return result
 
 
-def generate_board(lines: int = 9) -> list[str]:
+def generate_board(seed: int, lines: int = 9) -> list[str]:
     """
     Generate the board
 
     Args:
         lines: int - the board size
+        seed: int - the board seed
 
     Returns:
         list[str] - a list of strings (the board)
     """
     return [
         generate_line(
-            seed=int(time.time()*100000),
+            seed=seed + i * 1000,
             length=lines
-        ) for _ in range(lines)
+        ) for i in range(lines)
     ]
