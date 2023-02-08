@@ -9,6 +9,24 @@ COLOURED_BLOCKS = [
 ]
 
 
+def line_is_all_uniques(line: str) -> bool:
+    """
+    Check if line (row or column) does not contain repeated ints
+
+    Args:
+        line: str - the line (row or column)
+
+    Returns:
+        bool - whether the line does not contain repeated colours
+
+    >>> line_is_all_uniques("1111")
+    False
+    >>> line_is_all_uniques("* ** *129 * 3")
+    True
+    """
+    all_ints = list(filter(lambda x: ord("0") <= ord(x) <= ord("9"), line))
+    return len(set(all_ints)) == len(all_ints)
+
 def validate_board(board: list[str]) -> bool:
     """
     Validate the board by such rules:
@@ -45,21 +63,15 @@ def validate_board(board: list[str]) -> bool:
      "  2  ****"])
     True
     """
-    for block in COLOURED_BLOCKS:
-        line = [board[i][j] for i, j in block]
-        ints = list(filter(lambda x: ord("0") <= ord(x) <= ord("9"), line))
-        if len(ints) > len(set(ints)):
-            return False
+    return (
+        all(line_is_all_uniques(row) for row in board)
+        and all(
+            line_is_all_uniques("".join(row[i] for row in board))
+            for i in range(len(board))
+        )
+        and all(
+            line_is_all_uniques("".join(board[i][j] for i, j in block))
+            for block in COLOURED_BLOCKS
+        )
+    )
 
-    for line in board:
-        ints = list(filter(lambda x: ord("0") <= ord(x) <= ord("9"), line))
-        if len(ints) > len(set(ints)):
-            return False
-
-    for i in range(len(board)):
-        line = [row[i] for row in board]
-        ints = list(filter(lambda x: ord("0") <= ord(x) <= ord("9"), line))
-        if len(ints) > len(set(ints)):
-            return False
-
-    return True
