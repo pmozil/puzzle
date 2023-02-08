@@ -22,6 +22,17 @@ def validate_board(board: list[str]) -> bool:
 
     Returns:
         bool - whether the board adheres to the rules
+    >>> validate_board([\
+    "**** ****",\
+    "***1 ****",\
+    "**  3****",\
+    "* 4 1****",\
+    "     9 5 ",\
+    " 6  83  *",\
+    "3   1  **",\
+    "  8  2***",\
+     "  2  ****"])
+    False
     """
     for block in COLOURED_BLOCKS:
         line = [board[i][j] for i, j in block]
