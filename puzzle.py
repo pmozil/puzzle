@@ -8,6 +8,7 @@ COLOURED_BLOCKS = [
     [(i, 0) for i in range(4, 9)] + [(8, i) for i in range(1, 5)],
 ]
 
+
 def validate_board(board: list[str]) -> bool:
     """
     Validate the board by such rules:
@@ -22,4 +23,21 @@ def validate_board(board: list[str]) -> bool:
     Returns:
         bool - whether the board adheres to the rules
     """
-    ...
+    for block in COLOURED_BLOCKS:
+        line = [board[i][j] for i, j in block]
+        ints = list(filter(lambda x: ord("0") <= ord(x) <= ord("9"), line))
+        if len(ints) > len(set(ints)):
+            return False
+
+    for line in board:
+        ints = list(filter(lambda x: ord("0") <= ord(x) <= ord("9"), line))
+        if len(ints) > len(set(ints)):
+            return False
+
+    for i in range(len(board)):
+        line = [row[i] for row in board]
+        ints = list(filter(lambda x: ord("0") <= ord(x) <= ord("9"), line))
+        if len(ints) > len(set(ints)):
+            return False
+
+    return True
